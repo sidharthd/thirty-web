@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Commitment } from '../../types/commitment.ts';
 import type { ProgressState } from '../../logic/commitmentRules.ts';
-import { ProgressGrid } from '../components/ProgressGrid.tsx';
+import { RadialProgress } from '../components/RadialProgress.tsx';
 import { DoneButton } from '../components/DoneButton.tsx';
 import { Plus } from 'lucide-react';
 
@@ -46,12 +46,9 @@ export const ActiveScreen: React.FC<ActiveScreenProps> = ({
     <section className="active-screen">
       <header className="active-header">
         <h1 className="title-large">{commitment.title}</h1>
-        <p className="active-progress-stat">
-          {progress.current} / {progress.target} days completed
-        </p>
       </header>
 
-      <ProgressGrid
+      <RadialProgress
         completedCount={progress.current}
         isTodayDone={isTodayDone}
       />

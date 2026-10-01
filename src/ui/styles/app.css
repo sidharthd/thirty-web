@@ -185,45 +185,87 @@ body {
   transform: none;
 }
 
-/* 30-Day Grid */
-.grid-container {
+/* Precision Radial Dial */
+.radial-container {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
+  justify-content: center;
+  align-items: center;
   margin: var(--space-xl) 0;
 }
 
-.progress-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 8px;
-}
-
-.grid-cell {
-  aspect-ratio: 1;
-  border-radius: var(--radius-sm);
+.radial-wrapper {
+  position: relative;
+  width: 260px;
+  height: 260px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
-  font-weight: 500;
-  font-family: var(--font-mono);
+}
+
+.radial-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.radial-pip {
+  fill: transparent;
+  stroke: var(--border-strong);
+  stroke-width: 1.5;
   transition: all var(--transition-fast);
-  border: 1px solid var(--day-pending-border);
-  background-color: var(--day-pending-bg);
-  color: var(--day-pending-text);
-  user-select: none;
 }
 
-.grid-cell.completed {
-  background-color: var(--day-done-bg);
-  border-color: var(--day-done-bg);
-  color: var(--day-done-text);
+.radial-pip.filled {
+  fill: var(--day-done-bg);
+  stroke: var(--day-done-bg);
 }
 
-.grid-cell.today-target {
-  border-color: var(--text-primary);
-  border-width: 1.5px;
+.radial-pip.today-target {
+  stroke: var(--text-primary);
+  stroke-width: 2.2;
+}
+
+.radial-center-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  pointer-events: none;
+}
+
+.radial-stat-row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.radial-count {
+  font-size: 56px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.radial-total {
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--text-tertiary);
+}
+
+.radial-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-top: 6px;
 }
 
 /* Active Screen Layout */
