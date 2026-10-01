@@ -10,7 +10,14 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] }),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'pwa-192x192.png', 'pwa-512x512.png'],
+      includeAssets: [
+        'favicon.svg',
+        'apple-touch-icon.png',
+        'pwa-192x192.png',
+        'pwa-512x512.png',
+        'apple-splash-light.png',
+        'apple-splash-dark.png'
+      ],
       manifest: {
         name: '30-Day Commitment',
         short_name: 'Commitment',
