@@ -1,0 +1,79 @@
+:root {
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Light Theme */
+  --bg-app: #fcfcfd;
+  --bg-surface: #ffffff;
+  --bg-surface-subtle: #f4f4f6;
+  --border-subtle: #e5e5ea;
+  --border-strong: #d1d1d6;
+  --text-primary: #1c1c1e;
+  --text-secondary: #636366;
+  --text-tertiary: #8e8e93;
+
+  /* Interactive & Accents */
+  --btn-primary-bg: #1c1c1e;
+  --btn-primary-text: #ffffff;
+  --btn-primary-hover: #2c2c2e;
+  --btn-secondary-bg: #f2f2f7;
+  --btn-secondary-text: #1c1c1e;
+  --btn-secondary-hover: #e5e5ea;
+
+  /* Completed Day Fill */
+  --day-done-bg: #1c1c1e;
+  --day-done-text: #ffffff;
+  --day-pending-bg: transparent;
+  --day-pending-border: #e5e5ea;
+  --day-pending-text: #8e8e93;
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  /* Shadow */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-modal: 0 20px 40px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  --transition-fast: 150ms ease;
+  --transition-normal: 200ms ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-app: #0e0e10;
+    --bg-surface: #17171a;
+    --bg-surface-subtle: #1f1f23;
+    --border-subtle: #29292e;
+    --border-strong: #383840;
+    --text-primary: #f2f2f7;
+    --text-secondary: #a1a1aa;
+    --text-tertiary: #71717a;
+
+    --btn-primary-bg: #f2f2f7;
+    --btn-primary-text: #0e0e10;
+    --btn-primary-hover: #e5e5ea;
+    --btn-secondary-bg: #1f1f23;
+    --btn-secondary-text: #f2f2f7;
+    --btn-secondary-hover: #29292e;
+
+    --day-done-bg: #f2f2f7;
+    --day-done-text: #0e0e10;
+    --day-pending-bg: transparent;
+    --day-pending-border: #29292e;
+    --day-pending-text: #71717a;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-modal: 0 20px 40px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+}
