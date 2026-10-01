@@ -193,6 +193,39 @@ body {
   margin: var(--space-xl) 0;
 }
 
+.radial-interactive-btn {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  border-radius: 50%;
+  outline: none;
+  transition: transform var(--transition-normal);
+  -webkit-tap-highlight-color: transparent;
+  display: block;
+}
+
+.radial-interactive-btn.is-actionable:hover {
+  transform: scale(1.02);
+}
+
+.radial-interactive-btn.is-actionable:active {
+  transform: scale(0.98);
+}
+
+.radial-interactive-btn.is-actionable:hover .radial-pip.today-target {
+  stroke-width: 3.2px;
+}
+
+.radial-interactive-btn.is-actionable:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 8px;
+}
+
+.radial-interactive-btn.is-done {
+  cursor: default;
+}
+
 .radial-wrapper {
   position: relative;
   width: 260px;
@@ -272,36 +305,20 @@ body {
 .active-screen {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   flex: 1;
 }
 
 .active-header {
   margin-bottom: var(--space-md);
+  text-align: center;
 }
 
-.active-progress-stat {
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--text-secondary);
-  margin-top: var(--space-xs);
-}
-
-.active-actions {
+.active-undo-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-md);
-  margin-top: auto;
-  padding-top: var(--space-lg);
-}
-
-.completed-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-secondary);
+  justify-content: center;
+  margin-top: var(--space-md);
 }
 
 /* Create Commitment Screen */

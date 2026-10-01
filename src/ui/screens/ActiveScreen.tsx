@@ -2,8 +2,7 @@ import React from 'react';
 import type { Commitment } from '../../types/commitment.ts';
 import type { ProgressState } from '../../logic/commitmentRules.ts';
 import { RadialProgress } from '../components/RadialProgress.tsx';
-import { DoneButton } from '../components/DoneButton.tsx';
-import { Plus } from 'lucide-react';
+import { Plus, RotateCcw } from 'lucide-react';
 
 interface ActiveScreenProps {
   commitment: Commitment | null;
@@ -51,14 +50,23 @@ export const ActiveScreen: React.FC<ActiveScreenProps> = ({
       <RadialProgress
         completedCount={progress.current}
         isTodayDone={isTodayDone}
-      />
-
-      <DoneButton
-        isTodayDone={isTodayDone}
         onMarkDone={onMarkDone}
-        onUndo={onUndo}
         disabled={progress.isComplete}
       />
+
+      {isTodayDone && !progress.isComplete && (
+        <div className="active-undo-container">
+          <button
+            type="button"
+            className="btn btn-ghost"
+            onClick={onUndo}
+            title="Undo today's mark"
+          >
+            <RotateCcw size={14} aria-hidden="true" />
+            <span>Undo today</span>
+          </button>
+        </div>
+      )}
     </section>
   );
 };
