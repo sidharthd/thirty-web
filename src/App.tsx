@@ -3,6 +3,7 @@ import { useCommitments } from './logic/useCommitments.ts';
 import { Navigation, type NavTab } from './ui/components/Navigation.tsx';
 import { ActiveScreen } from './ui/screens/ActiveScreen.tsx';
 import { CreateScreen } from './ui/screens/CreateScreen.tsx';
+import { IntroScreen } from './ui/screens/IntroScreen.tsx';
 import { PastScreen } from './ui/screens/PastScreen.tsx';
 import { GraduationScreen } from './ui/screens/GraduationScreen.tsx';
 import './ui/styles/app.css';
@@ -12,6 +13,7 @@ export default function App() {
     activeCommitment,
     pastCommitments,
     isTodayDone,
+    isFirstTimeUser,
     progress,
     showGraduationScreen,
     createCommitment,
@@ -45,31 +47,37 @@ export default function App() {
     return result;
   };
 
-  // Determine whether to display the CreateScreen
+  // Determine whether to display the Create / Intro Screen
   const shouldShowCreateScreen =
     currentTab === 'active' && (!activeCommitment || isCreatingManually);
 
   return (
     <div className="app-container">
-      <Navigation
-        currentTab={currentTab}
-        onSelectTab={(tab) => {
-          setCurrentTab(tab);
-          if (tab === 'past') {
-            setIsCreatingManually(false);
-          }
-        }}
-        pastCount={pastCommitments.length}
-      />
+      {!isFirstTimeUser && (
+        <Navigation
+          currentTab={currentTab}
+          onSelectTab={(tab) => {
+            setCurrentTab(tab);
+            if (tab === 'past') {
+              setIsCreatingManually(false);
+            }
+          }}
+          pastCount={pastCommitments.length}
+        />
+      )}
 
       <main className="app-main">
         {currentTab === 'active' && (
           <>
             {shouldShowCreateScreen ? (
-              <CreateScreen
-                onSubmit={handleCreateSubmit}
-                onCancel={activeCommitment ? () => setIsCreatingManually(false) : undefined}
-              />
+              isFirstTimeUser ? (
+                <IntroScreen onSubmit={handleCreateSubmit} />
+              ) : (
+                <CreateScreen
+                  onSubmit={handleCreateSubmit}
+                  onCancel={activeCommitment ? () => setIsCreatingManually(false) : undefined}
+                />
+              )
             ) : (
               <ActiveScreen
                 commitment={activeCommitment}

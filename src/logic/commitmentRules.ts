@@ -88,3 +88,15 @@ export function validateNewCommitment(
 
   return { valid: true };
 }
+
+/**
+ * Determines if the user is launching the app for the very first time.
+ * A first-time user has no active commitment and no past commitments.
+ */
+export function checkIsFirstTimeUser(
+  activeCommitment: Commitment | null,
+  pastCommitments: Commitment[]
+): boolean {
+  return !activeCommitment && pastCommitments.length === 0;
+}
+

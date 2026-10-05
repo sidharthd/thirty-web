@@ -8,6 +8,7 @@ import {
   isCompletedToday,
   canMarkToday,
   validateNewCommitment,
+  checkIsFirstTimeUser,
   type ProgressState,
 } from './commitmentRules.ts';
 
@@ -23,6 +24,7 @@ export interface UseCommitmentsReturn {
   pastCommitments: Commitment[];
   isLoaded: boolean;
   isTodayDone: boolean;
+  isFirstTimeUser: boolean;
   progress: ProgressState;
   showGraduationScreen: boolean;
   createCommitment: (title: string) => { success: boolean; error?: string };
@@ -53,6 +55,11 @@ export function useCommitments(): UseCommitmentsReturn {
   const progress = useMemo(
     () => getProgress(activeCommitment),
     [activeCommitment]
+  );
+
+  const isFirstTimeUser = useMemo(
+    () => checkIsFirstTimeUser(activeCommitment, pastCommitments),
+    [activeCommitment, pastCommitments]
   );
 
   // Show graduation when active commitment reaches 30 days and has not been dismissed
@@ -174,6 +181,7 @@ export function useCommitments(): UseCommitmentsReturn {
     pastCommitments,
     isLoaded,
     isTodayDone,
+    isFirstTimeUser,
     progress,
     showGraduationScreen,
     createCommitment,
