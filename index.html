@@ -5,7 +5,7 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-    <!-- iOS Splash Screens -->
+    <!-- iOS Native Startup Screens -->
     <link
       rel="apple-touch-startup-image"
       href="/apple-splash-dark.png"
@@ -26,63 +26,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Commitment" />
     <title>30-Day Commitment</title>
-    <style>
-      #pwa-splash {
-        position: fixed;
-        inset: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background-color: #fcfcfd;
-        color: #1c1c1e;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        gap: 16px;
-        user-select: none;
-      }
-      .splash-title {
-        font-size: 15px;
-        font-weight: 600;
-        letter-spacing: -0.01em;
-      }
-      @media (prefers-color-scheme: dark) {
-        #pwa-splash {
-          background-color: #0e0e10;
-          color: #f2f2f7;
-        }
-      }
-    </style>
   </head>
   <body>
-    <div id="root">
-      <div id="pwa-splash" aria-hidden="true">
-        <svg viewBox="0 0 120 120" width="72" height="72" aria-hidden="true">
-          <circle
-            cx="60"
-            cy="60"
-            r="48"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="3"
-            stroke-dasharray="6 4"
-            opacity="0.5"
-          />
-          <text
-            x="60"
-            y="69"
-            font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
-            font-size="28"
-            font-weight="700"
-            fill="currentColor"
-            text-anchor="middle"
-            letter-spacing="-1px"
-          >
-            30
-          </text>
-        </svg>
-        <div class="splash-title">30-Day Commitment</div>
-      </div>
-    </div>
+    <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
