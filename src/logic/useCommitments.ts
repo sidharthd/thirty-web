@@ -9,6 +9,8 @@ import {
   canMarkToday,
   validateNewCommitment,
   checkIsFirstTimeUser,
+  isWithinGracePeriod,
+  validateEditedTitle,
   type ProgressState,
 } from './commitmentRules.ts';
 
@@ -27,11 +29,15 @@ export interface UseCommitmentsReturn {
   isFirstTimeUser: boolean;
   progress: ProgressState;
   showGraduationScreen: boolean;
+  isWithinGracePeriod: boolean;
   createCommitment: (title: string) => { success: boolean; error?: string };
   markTodayDone: () => { success: boolean; isGraduation: boolean };
   unmarkToday: () => void;
   graduateCommitment: () => Commitment | null;
   dismissGraduation: () => void;
+  editActiveTitle: (newTitle: string) => { success: boolean; error?: string };
+  cancelActiveCommitment: () => { success: boolean; error?: string };
+  abandonActiveCommitment: () => { success: boolean; error?: string };
 }
 
 export function useCommitments(): UseCommitmentsReturn {
@@ -176,6 +182,86 @@ export function useCommitments(): UseCommitmentsReturn {
     graduateCommitment();
   }, [graduateCommitment]);
 
+  const isGracePeriodActive = useMemo(
+    () => isWithinGracePeriod(activeCommitment),
+    [activeCommitment]
+  );
+
+  /**
+   * Updates the title of the active commitment.
+   */
+  const editActiveTitle = useCallback((newTitle: string): { success: boolean; error?: string } => {
+    if (!activeCommitment) {
+      return { success: false, error: 'No active commitment to edit.' };
+    }
+
+    const validation = validateEditedTitle(newTitle);
+    if (!validation.valid) {
+      return { success: false, error: validation.error };
+    }
+
+    const trimmed = newTitle.trim();
+    setAppState((prev) => {
+      if (!prev.activeCommitment) return prev;
+      return {
+        ...prev,
+        activeCommitment: {
+          ...prev.activeCommitment,
+          title: trimmed,
+        },
+      };
+    });
+
+    return { success: true };
+  }, [activeCommitment]);
+
+  /**
+   * Cancels the active commitment during its grace period.
+   * Completely removes it without saving to past history.
+   */
+  const cancelActiveCommitment = useCallback((): { success: boolean; error?: string } => {
+    if (!activeCommitment) {
+      return { success: false, error: 'No active commitment to cancel.' };
+    }
+
+    if (!isWithinGracePeriod(activeCommitment)) {
+      return {
+        success: false,
+        error: 'Grace period has expired. You can abandon this commitment instead.',
+      };
+    }
+
+    setAppState((prev) => ({
+      ...prev,
+      activeCommitment: null,
+    }));
+
+    return { success: true };
+  }, [activeCommitment]);
+
+  /**
+   * Abandons the active commitment after the grace period.
+   * Concludes it early and archives it to past commitments.
+   */
+  const abandonActiveCommitment = useCallback((): { success: boolean; error?: string } => {
+    if (!activeCommitment) {
+      return { success: false, error: 'No active commitment to abandon.' };
+    }
+
+    const abandoned: Commitment = {
+      ...activeCommitment,
+      status: 'abandoned',
+      abandonedAt: new Date().toISOString(),
+    };
+
+    setAppState((prev) => ({
+      activeCommitment: null,
+      pastCommitments: [abandoned, ...prev.pastCommitments],
+    }));
+
+    return { success: true };
+  }, [activeCommitment]);
+
   return {
     activeCommitment,
     pastCommitments,
@@ -184,10 +270,14 @@ export function useCommitments(): UseCommitmentsReturn {
     isFirstTimeUser,
     progress,
     showGraduationScreen,
+    isWithinGracePeriod: isGracePeriodActive,
     createCommitment,
     markTodayDone,
     unmarkToday,
     graduateCommitment,
     dismissGraduation,
+    editActiveTitle,
+    cancelActiveCommitment,
+    abandonActiveCommitment,
   };
 }

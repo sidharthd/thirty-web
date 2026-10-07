@@ -16,11 +16,15 @@ export default function App() {
     isFirstTimeUser,
     progress,
     showGraduationScreen,
+    isWithinGracePeriod,
     createCommitment,
     markTodayDone,
     unmarkToday,
     graduateCommitment,
     dismissGraduation,
+    editActiveTitle,
+    cancelActiveCommitment,
+    abandonActiveCommitment,
   } = useCommitments();
 
   const [currentTab, setCurrentTab] = useState<NavTab>('active');
@@ -83,9 +87,13 @@ export default function App() {
                 commitment={activeCommitment}
                 progress={progress}
                 isTodayDone={isTodayDone}
+                isWithinGracePeriod={isWithinGracePeriod}
                 onMarkDone={markTodayDone}
                 onUndo={unmarkToday}
                 onCreateClick={() => setIsCreatingManually(true)}
+                onEditTitle={editActiveTitle}
+                onCancelCommitment={cancelActiveCommitment}
+                onAbandonCommitment={abandonActiveCommitment}
               />
             )}
           </>

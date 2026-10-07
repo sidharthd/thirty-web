@@ -28,12 +28,21 @@ function sanitizeCommitment(raw: unknown): Commitment | null {
     ? candidate.completedDates.filter((item): item is string => typeof item === 'string')
     : [];
 
-  const status = candidate.status === 'graduated' ? 'graduated' : 'active';
+  let status: Commitment['status'] = 'active';
+  if (candidate.status === 'graduated') {
+    status = 'graduated';
+  } else if (candidate.status === 'abandoned') {
+    status = 'abandoned';
+  }
+
   const createdAt = typeof candidate.createdAt === 'string'
     ? candidate.createdAt
     : new Date().toISOString();
   const graduatedAt = typeof candidate.graduatedAt === 'string'
     ? candidate.graduatedAt
+    : undefined;
+  const abandonedAt = typeof candidate.abandonedAt === 'string'
+    ? candidate.abandonedAt
     : undefined;
 
   return {
@@ -43,6 +52,7 @@ function sanitizeCommitment(raw: unknown): Commitment | null {
     completedDates,
     status,
     graduatedAt,
+    abandonedAt,
   };
 }
 

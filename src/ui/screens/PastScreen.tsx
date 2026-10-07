@@ -12,7 +12,7 @@ export const PastScreen: React.FC<PastScreenProps> = ({ pastCommitments }) => {
       <header>
         <h1 className="title-large">Past Commitments</h1>
         <p className="text-meta" style={{ marginTop: '4px' }}>
-          Historical records of completed 30-day commitments.
+          Historical records of your 30-day commitments.
         </p>
       </header>
 

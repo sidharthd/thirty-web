@@ -1,4 +1,4 @@
-export type CommitmentStatus = 'active' | 'graduated';
+export type CommitmentStatus = 'active' | 'graduated' | 'abandoned';
 
 export interface Commitment {
   id: string;
@@ -7,6 +7,7 @@ export interface Commitment {
   completedDates: string[]; // List of unique "YYYY-MM-DD" local calendar date strings
   status: CommitmentStatus;
   graduatedAt?: string; // ISO 8601 string when 30/30 was achieved
+  abandonedAt?: string; // ISO 8601 string when abandoned early
 }
 
 export interface AppState {

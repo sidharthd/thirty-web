@@ -1,26 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { Commitment } from '../../types/commitment.ts';
 import type { ProgressState } from '../../logic/commitmentRules.ts';
 import { RadialProgress } from '../components/RadialProgress.tsx';
-import { Plus, RotateCcw } from 'lucide-react';
+import { CommitmentActionModal } from '../components/CommitmentActionModal.tsx';
+import { Plus, RotateCcw, MoreHorizontal } from 'lucide-react';
 
 interface ActiveScreenProps {
   commitment: Commitment | null;
   progress: ProgressState;
   isTodayDone: boolean;
+  isWithinGracePeriod: boolean;
   onMarkDone: () => void;
   onUndo: () => void;
   onCreateClick: () => void;
+  onEditTitle: (newTitle: string) => { success: boolean; error?: string };
+  onCancelCommitment: () => { success: boolean; error?: string };
+  onAbandonCommitment: () => { success: boolean; error?: string };
 }
 
 export const ActiveScreen: React.FC<ActiveScreenProps> = ({
   commitment,
   progress,
   isTodayDone,
+  isWithinGracePeriod,
   onMarkDone,
   onUndo,
   onCreateClick,
+  onEditTitle,
+  onCancelCommitment,
+  onAbandonCommitment,
 }) => {
+  const [isActionModalOpen, setIsActionModalOpen] = useState(false);
   if (!commitment) {
     return (
       <section className="empty-state">
@@ -44,7 +54,16 @@ export const ActiveScreen: React.FC<ActiveScreenProps> = ({
   return (
     <section className="active-screen">
       <header className="active-header">
-        <h1 className="title-large">{commitment.title}</h1>
+        <h1 className="title-large active-title">{commitment.title}</h1>
+        <button
+          type="button"
+          className="btn-icon-header"
+          onClick={() => setIsActionModalOpen(true)}
+          aria-label="Commitment options"
+          title="Commitment options"
+        >
+          <MoreHorizontal size={20} aria-hidden="true" />
+        </button>
       </header>
 
       <RadialProgress
@@ -66,6 +85,17 @@ export const ActiveScreen: React.FC<ActiveScreenProps> = ({
             <span>Undo today</span>
           </button>
         </div>
+      )}
+
+      {isActionModalOpen && (
+        <CommitmentActionModal
+          commitment={commitment}
+          isWithinGracePeriod={isWithinGracePeriod}
+          onClose={() => setIsActionModalOpen(false)}
+          onEditTitle={onEditTitle}
+          onCancelCommitment={onCancelCommitment}
+          onAbandonCommitment={onAbandonCommitment}
+        />
       )}
     </section>
   );
